@@ -1,15 +1,13 @@
 function FindProxyForURL(url, host) {
-    // Define proxy servers
-    var proxy1 = "PROXY proxy1.example.com:8080";
-    var proxy2 = "PROXY proxy2.example.com:8080";
-    var direct = "DIRECT";
+    // Cloudflare DNS addresses
+    var dns1 = "1.1.1.1";
+    var dns2 = "1.0.0.1";
 
-    // Optimize based on destination domain
-    if (dnsDomainIs(host, ".fastsite.com")) {
-        return proxy1;
-    } else if (dnsDomainIs(host, ".anothersite.com")) {
-        return proxy2;
-    } else {
-        return direct;
+    // Direct all traffic through the specified DNS servers
+    if (dnsResolve(host) == dns1 || dnsResolve(host) == dns2) {
+        return "DIRECT";
     }
+
+    // Default proxy configuration (no proxy)
+    return "DIRECT";
 }
