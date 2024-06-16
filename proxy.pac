@@ -1,13 +1,12 @@
 function FindProxyForURL(url, host) {
-    // Cloudflare DNS addresses
-    var dns1 = "1.1.1.1";
-    var dns2 = "1.0.0.1";
+    // Define the DNS over HTTPS server
+    var dohServer = "https://cloudflare-dns.com/dns-query";
 
-    // Direct all traffic through the specified DNS servers
-    if (dnsResolve(host) == dns1 || dnsResolve(host) == dns2) {
-        return "DIRECT";
+    // Define which domains you want to use the proxy for
+    if (shExpMatch(host, "*")) {
+        return "HTTPS " + dohServer;
     }
 
-    // Default proxy configuration (no proxy)
+    // Default return
     return "DIRECT";
 }
