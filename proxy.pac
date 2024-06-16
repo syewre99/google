@@ -1,19 +1,15 @@
 function FindProxyForURL(url, host) {
-    // List of domains to use DoH for
-    var dohDomains = [
-        ".google.com",
-        ".youtube.com",
-        ".facebook.com"
-    ];
+    // Define proxy servers
+    var proxy1 = "PROXY proxy1.example.com:8080";
+    var proxy2 = "PROXY proxy2.example.com:8080";
+    var direct = "DIRECT";
 
-    // Use a specific proxy for the listed domains
-    for (var i = 0; i < dohDomains.length; i++) {
-        if (dnsDomainIs(host, dohDomains[i])) {
-            // Change PROXY_IP:PORT to the actual proxy IP and port you want to use
-            return "HTTPS PROXY_IP:PORT";
-        }
+    // Optimize based on destination domain
+    if (dnsDomainIs(host, ".fastsite.com")) {
+        return proxy1;
+    } else if (dnsDomainIs(host, ".anothersite.com")) {
+        return proxy2;
+    } else {
+        return direct;
     }
-
-    // Default to direct connection for other domains
-    return "DIRECT";
 }
